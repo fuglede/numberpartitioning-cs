@@ -7,6 +7,16 @@ namespace NumberPartitioning
 {
     public static class KarmarkarKarp
     {
+        /// <summary>
+        /// Solves the partition problem using the Karmarkar--Karp algorithm.
+        /// </summary>
+        /// <param name="numbers">The numbers to partition.</param>
+        /// <param name="numParts">The number of desired parts.</param>
+        /// <param name="returnIndices">Represent the parts by their indices in the input number set instead
+        /// of their values</param>
+        /// <param name="preSorted">Set to <see langword="true" /> to save time when the input numbers are
+        /// already sorted in descending order.</param>
+        /// <returns>The partition as a <see cref="PartitioningResult"/>.</returns>
         public static PartitioningResult Heuristic(int[] numbers, int numParts, bool returnIndices = false, bool preSorted = false)
         {
             var indexSortingMap = Enumerable.Range(0, numbers.Length).ToArray();

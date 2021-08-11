@@ -4,7 +4,7 @@ This repository includes some pure C# solvers for the [multiway number partition
 
 ## The problem
 
-Concretely, the problem we solve is the following: Suppose *S* is some collection of integers, and *k* is some positive integer, find a partition of *S* so that the sums of the integers in each part are as close as possible.
+Concretely, the problem we solve is the following: Suppose *S* is some collection of integers, and *k* is some positive integer, find a partition of *S* into *k* parts so that the sums of the integers in each part are as close as possible.
 
 The objective function describing "closeness" is usually taken to be the difference between the largest and smallest sum among all parts. The optimization version is NP-hard, and the bundled algorithms only aim to provide a good solution in short time. This also means that they can be useful for other objective functions such as, say, the variance of all sums.
 
