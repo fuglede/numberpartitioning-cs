@@ -12,10 +12,9 @@ namespace NumberPartitioning
         /// class with a given partition and partition sizes.
         /// </summary>
         /// <param name="partition">The partition as a list of arrays of integers. The
-        /// integers can represent either the indices in a number set or the
-        /// numbers themselves.</param>
+        /// integers represent the indices in a number set.</param>
         /// <param name="sizes">The sums of the values in the partition.</param>
-        public PartitioningResult(List<int>[] partition, int[] sizes)
+        public PartitioningResult(List<int>[] partition, double[] sizes)
         {
             Partition = partition;
             Sizes = sizes;
@@ -23,17 +22,16 @@ namespace NumberPartitioning
 
         /// <summary>
         /// The partition as a list of arrays of integers. The
-        /// integers can represent either the indices in a number set or the
-        /// numbers themselves.
+        /// integers represent the indices in a number set.
         /// </summary>
         public List<int>[] Partition { get; }
 
         /// <summary>
         /// The sums of the values in the partition.
         /// </summary>
-        public int[] Sizes { get; }
+        public double[] Sizes { get; }
 
-        public void Deconstruct(out List<int>[] partition, out int[] sizes)
+        public void Deconstruct(out List<int>[] partition, out double[] sizes)
         {
             partition = Partition;
             sizes = Sizes;

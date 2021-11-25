@@ -21,7 +21,7 @@ var numbers = new[] { 4, 6, 7, 5, 8 };
 var (partition, sizes) = KarmarkarKarp.Heuristic(numbers, 3);
 ```
 
-Here, `partition` becomes `[[8], [4, 7], [5, 6]]`, and `sizes` are the sums of each part, `[8, 11, 11]`. This happens to be optimal.
+Here, `partition` becomes `[[4], [0, 3], [1, 2]]`, the indices corresponding to the elements `[[8], [4, 7], [5, 6]]`, and `sizes` are the sums of the elements in each part, `[8, 11, 11]`. This happens to be optimal.
 
 As noted [on Wikipedia](https://en.wikipedia.org/wiki/Largest_differencing_method), an example where this approach does not give the optimal result is the following:
 

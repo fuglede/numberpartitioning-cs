@@ -11,12 +11,10 @@ namespace NumberPartitioning
         /// </summary>
         /// <param name="numbers">The numbers to partition.</param>
         /// <param name="numParts">The number of desired parts.</param>
-        /// <param name="returnIndices">Represent the parts by their indices in the input number set instead
-        /// of their values</param>
         /// <param name="preSorted">Set to <see langword="true" /> to save time when the input numbers are
         /// already sorted in descending order.</param>
         /// <returns>The partition as a <see cref="PartitioningResult"/>.</returns>
-        public static PartitioningResult Heuristic(int[] numbers, int numParts, bool returnIndices = false, bool preSorted = false)
+        public static PartitioningResult Heuristic(double[] numbers, int numParts, bool preSorted = false)
         {
             var indexSortingMap = Enumerable.Range(0, numbers.Length).ToArray();
             if (!preSorted)
@@ -25,14 +23,14 @@ namespace NumberPartitioning
                 numbers = numbers.Reverse().ToArray();
                 indexSortingMap = indexSortingMap.Reverse().ToArray();
             }
-            var sizes = new int[numParts];
+            var sizes = new double[numParts];
             var partition = new List<int>[numParts];
             for (var i = 0; i < numParts; i++)
                 partition[i] = new List<int>();
             for (var i = 0; i < numbers.Length; i++)
             {
                 var number = numbers[i];
-                var lowest = int.MaxValue;
+                var lowest = double.PositiveInfinity;
                 int lowestIndex = default;
                 for (var j = 0; j < numParts; j++)
                 {
@@ -44,7 +42,7 @@ namespace NumberPartitioning
                 }
 
                 sizes[lowestIndex] += number;
-                partition[lowestIndex].Add(returnIndices ? indexSortingMap[i] : number);
+                partition[lowestIndex].Add(indexSortingMap[i]);
             }
 
             return new PartitioningResult(partition, sizes);
