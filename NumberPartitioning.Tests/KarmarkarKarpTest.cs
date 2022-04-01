@@ -18,6 +18,18 @@ namespace NumberPartitioning.Tests
         }
 
         [Fact]
+        public void TestHeuristicWithGenericElements()
+        {
+            var weights = new double[] { 4, 6, 7, 5, 8 };
+            var elements = new[] { "foo", "bar", "baz", "faz", "boo" };
+            var (partition, sizes) = KarmarkarKarp.Heuristic(elements, weights, 3, true);
+            Assert.Equal(new double[] { 8, 11, 11 }, sizes);
+            Assert.Equal(
+                new List<string>[] { new() { "boo" }, new() { "foo", "baz" }, new() { "faz", "bar" } },
+                partition);
+        }
+
+        [Fact]
         public void TestHeuristicSuboptimal()
         {
             var numbers = new double[] { 5, 5, 5, 4, 4, 3, 3, 1 };

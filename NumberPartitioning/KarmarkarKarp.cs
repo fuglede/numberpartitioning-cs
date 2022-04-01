@@ -8,42 +8,55 @@ namespace NumberPartitioning
     public static class KarmarkarKarp
     {
         /// <summary>
-        /// Solves the partition problem using the Karmarkar--Karp algorithm.
+        /// Solves the partition problem using the greedy algorithm.
         /// </summary>
-        /// <param name="numbers">The numbers to partition.</param>
+        /// <param name="numbers">The weights to partition into parts of similar sum.</param>
         /// <param name="numParts">The number of desired parts.</param>
         /// <param name="preSorted">Set to <see langword="true" /> to save time when the input numbers are
         /// already sorted in descending order.</param>
-        /// <returns>The partition as a <see cref="PartitioningResult"/>.</returns>
-        public static PartitioningResult Heuristic(double[] numbers, int numParts, bool preSorted = false)
+        /// <returns>The partition as a <see cref="PartitioningResult{T}"/> whose generic type argument is <see cref="int"/>.</returns>
+        public static PartitioningResult<int> Heuristic(double[] numbers, int numParts,
+            bool preSorted = false) =>
+            Heuristic(Enumerable.Range(0, numbers.Length).ToArray(), numbers, numParts, preSorted);
+
+        /// <summary>
+        /// Solves the partition problem using the Karmarkar--Karp algorithm.
+        /// </summary>
+        /// <param name="elements">The elements to partition into parts of similar weight.</param>
+        /// <param name="weights">The weights of the elements, assumed to be equal in count to <paramref name="elements"/>.</param>
+        /// <param name="numParts">The number of desired parts.</param>
+        /// <param name="preSorted">Set to <see langword="true" /> to save time when the input weights are
+        /// already sorted in descending order.</param>
+        /// <returns>The partition as a <see cref="PartitioningResult{T}"/>.</returns>
+        public static PartitioningResult<T> Heuristic<T>(T[] elements, double[] weights, int numParts, bool preSorted = false)
         {
-            var indexSortingMap = Enumerable.Range(0, numbers.Length).ToArray();
+            var indexSortingMap = Enumerable.Range(0, weights.Length).ToArray();
             if (!preSorted)
             {
-                Array.Sort(numbers, indexSortingMap);
-                numbers = numbers.Reverse().ToArray();
+                Array.Sort(weights, indexSortingMap);
+                weights = weights.Reverse().ToArray();
                 indexSortingMap = indexSortingMap.Reverse().ToArray();
             }
 
-            var partitions = new FastPriorityQueue<PartitionNode>(numbers.Length);
-            for (var i = 0; i < numbers.Length; i++)
+            var partitions = new FastPriorityQueue<PartitionNode<T>>(weights.Length);
+            for (var i = 0; i < weights.Length; i++)
             {
-                var number = numbers[i];
-                var thisPartition = new List<int>[numParts];
+                var number = weights[i];
+                var thisPartition = new List<T>[numParts];
                 for (var n = 0; n < numParts - 1; n++)
-                    thisPartition[n] = new List<int>();
-                thisPartition[numParts - 1] = new List<int> { indexSortingMap[i] };
+                    thisPartition[n] = new List<T>();
+                thisPartition[numParts - 1] = new List<T> { elements[indexSortingMap[i]] };
                 var thisSum = new double[numParts];
                 thisSum[numParts - 1] = number;
-                var thisNode = new PartitionNode { Sizes = thisSum, Partition = thisPartition };
+                var thisNode = new PartitionNode<T> { Sizes = thisSum, Partition = thisPartition };
                 partitions.Enqueue(thisNode, -(float)number);
             }
 
-            for (var i = 0; i < numbers.Length - 1; i++)
+            for (var i = 0; i < weights.Length - 1; i++)
             {
                 var node1 = partitions.Dequeue();
                 var node2 = partitions.Dequeue();
-                var newPartition = new List<int>[numParts];
+                var newPartition = new List<T>[numParts];
                 var newSizes = new double[numParts];
                 for (var k = 0; k < numParts; k++)
                 {
@@ -53,18 +66,18 @@ namespace NumberPartitioning
                 }
 
                 Array.Sort(newSizes, newPartition);
-                var newNode = new PartitionNode { Sizes = newSizes, Partition = newPartition };
+                var newNode = new PartitionNode<T> { Sizes = newSizes, Partition = newPartition };
                 var diff = newSizes[numParts - 1] - newSizes[0];
                 partitions.Enqueue(newNode, -(float)diff);
             }
 
             var node = partitions.Dequeue();
-            return new PartitioningResult(node.Partition, node.Sizes);
+            return new PartitioningResult<T>(node.Partition, node.Sizes);
         }
 
-        private class PartitionNode : FastPriorityQueueNode
+        private class PartitionNode<T> : FastPriorityQueueNode
         {
-            public List<int>[] Partition { get; set; }
+            public List<T>[] Partition { get; set; }
             public double[] Sizes { get; set; }
         }
     }

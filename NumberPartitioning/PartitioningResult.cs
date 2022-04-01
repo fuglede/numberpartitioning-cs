@@ -5,7 +5,7 @@ namespace NumberPartitioning
     /// <summary>
     /// Represents a partition of a given number set.
     /// </summary>
-    public class PartitioningResult
+    public class PartitioningResult<T>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PartitioningResult"/>
@@ -14,7 +14,7 @@ namespace NumberPartitioning
         /// <param name="partition">The partition as a list of arrays of integers. The
         /// integers represent the indices in a number set.</param>
         /// <param name="sizes">The sums of the values in the partition.</param>
-        public PartitioningResult(List<int>[] partition, double[] sizes)
+        public PartitioningResult(List<T>[] partition, double[] sizes)
         {
             Partition = partition;
             Sizes = sizes;
@@ -24,14 +24,14 @@ namespace NumberPartitioning
         /// The partition as a list of arrays of integers. The
         /// integers represent the indices in a number set.
         /// </summary>
-        public List<int>[] Partition { get; }
+        public List<T>[] Partition { get; }
 
         /// <summary>
         /// The sums of the values in the partition.
         /// </summary>
         public double[] Sizes { get; }
 
-        public void Deconstruct(out List<int>[] partition, out double[] sizes)
+        public void Deconstruct(out List<T>[] partition, out double[] sizes)
         {
             partition = Partition;
             sizes = Sizes;
