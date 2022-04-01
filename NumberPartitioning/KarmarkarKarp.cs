@@ -48,7 +48,7 @@ namespace NumberPartitioning
                 thisPartition[numParts - 1] = new List<T> { elements[indexSortingMap[i]] };
                 var thisSum = new double[numParts];
                 thisSum[numParts - 1] = number;
-                var thisNode = new PartitionNode<T> { Sizes = thisSum, Partition = thisPartition };
+                var thisNode = new PartitionNode<T>(thisPartition, thisSum);
                 partitions.Enqueue(thisNode, -(float)number);
             }
 
@@ -66,7 +66,7 @@ namespace NumberPartitioning
                 }
 
                 Array.Sort(newSizes, newPartition);
-                var newNode = new PartitionNode<T> { Sizes = newSizes, Partition = newPartition };
+                var newNode = new PartitionNode<T>(newPartition, newSizes);
                 var diff = newSizes[numParts - 1] - newSizes[0];
                 partitions.Enqueue(newNode, -(float)diff);
             }
@@ -77,8 +77,14 @@ namespace NumberPartitioning
 
         private class PartitionNode<T> : FastPriorityQueueNode
         {
-            public List<T>[] Partition { get; set; }
-            public double[] Sizes { get; set; }
+            public PartitionNode(List<T>[] partition, double[] sizes)
+            {
+                Partition = partition;
+                Sizes = sizes;
+            }
+
+            public List<T>[] Partition { get; }
+            public double[] Sizes { get; }
         }
     }
 }

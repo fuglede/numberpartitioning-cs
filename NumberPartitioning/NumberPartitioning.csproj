@@ -10,6 +10,8 @@
     <PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
     <PackageTags>math;optimization;computer-science;algorithm;combinatorics;partition;operations-research;solver</PackageTags>
     <RepositoryUrl>https://github.com/fuglede/numberpartitioning-cs</RepositoryUrl>
+    <LangVersion>8</LangVersion>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
