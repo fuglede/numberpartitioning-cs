@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -6,6 +7,24 @@ namespace NumberPartitioning.Tests
 {
     public class KarmarkarKarpTest
     {
+        [Theory]
+        [InlineData(-1)]
+        [InlineData(0)]
+        public void TestHeuristicInvalidPartCount(int parts)
+        {
+            var numbers = new double[] { 4, 6, 7, 5, 8 };
+            Assert.Throws<ArgumentOutOfRangeException>(() => KarmarkarKarp.Heuristic(numbers, parts));
+        }
+
+        [Fact]
+        public void TestHeuristicWithEmptyInput()
+        {
+            var numbers = Array.Empty<double>();
+            var (partition, sizes) = KarmarkarKarp.Heuristic(numbers, 3);
+            Assert.Equal(new double[] { 0, 0, 0 }, sizes);
+            Assert.Equal(new List<int>[] { new(), new(), new() }, partition);
+        }
+
         [Fact]
         public void TestHeuristicWorks()
         {

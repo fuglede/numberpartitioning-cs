@@ -29,6 +29,9 @@ namespace NumberPartitioning
         /// <returns>The partition as a <see cref="PartitioningResult{T}"/>.</returns>
         public static PartitioningResult<T> Heuristic<T>(T[] elements, double[] weights, int numParts, bool preSorted = false)
         {
+            if (numParts <= 0)
+                throw new ArgumentOutOfRangeException(nameof(numParts), $"{numParts} must be positive");
+
             var indexSortingMap = Enumerable.Range(0, weights.Length).ToArray();
             if (!preSorted)
             {
