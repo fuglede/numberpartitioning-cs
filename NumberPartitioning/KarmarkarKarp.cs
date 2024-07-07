@@ -8,7 +8,7 @@ namespace NumberPartitioning
     public static class KarmarkarKarp
     {
         /// <summary>
-        /// Solves the partition problem using the greedy algorithm.
+        /// Solves the partition problem using the Karmarkar--Karp algorithm.
         /// </summary>
         /// <param name="numbers">The weights to partition into parts of similar sum.</param>
         /// <param name="numParts">The number of desired parts.</param>
