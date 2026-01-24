@@ -1,3 +1,5 @@
+Note: This repository has been moved to https://codeberg.org/fuglede/numberpartitioning-cs
+
 # Partition problem solvers in .NET
 
 This repository includes some pure C# solvers for the [multiway number partitioning optimization problem](https://en.wikipedia.org/wiki/Multiway_number_partitioning); in particular, the standard [greedy algorithm](https://en.wikipedia.org/wiki/Greedy_number_partitioning), and the [Karmarkar--Karp algorithm](https://en.wikipedia.org/wiki/Largest_differencing_method).
